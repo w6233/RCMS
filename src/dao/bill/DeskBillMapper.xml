@@ -6,7 +6,7 @@
                    keyColumn="id">
             select LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO mydiningroom.deskbill
+        INSERT INTO deskbill
         (
         deskID,
         billCode,
@@ -36,7 +36,7 @@
 
     <insert id="addDeskBillDetail" parameterType="DeskInfo_detail">
 		INSERT INTO
-		mydiningroom.deskbill_detail
+		deskbill_detail
 		(
 		deskBillID,
 		dishName,
@@ -92,7 +92,7 @@
 		content,
 		price
 		FROM
-		mydiningroom.deskbill_detail WHERE
+		deskbill_detail WHERE
 		deskBillID=#{id}
 	</select>
 

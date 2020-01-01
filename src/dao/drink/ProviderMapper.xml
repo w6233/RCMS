@@ -12,7 +12,7 @@
 		remark,
 		createDate
 		FROM
-		mydiningroom.provider
+		provider
 	</select>
 
     <select id="getDrinkBill" parameterType="DrinkBillPager" resultType="DrinkBill">
@@ -30,7 +30,7 @@
         price,
         isPay
         FROM
-        mydiningroom.drinkbill,provider
+        drinkbill,provider
         <trim prefix="where" prefixOverrides="and">
             and provider.id=providerId
             <if test="providerId!=null and providerId!=0">
@@ -60,7 +60,7 @@
 	</delete>
 
     <update id="updateDrinkBill" parameterType="DrinkBill">
-        UPDATE mydiningroom.drinkbill
+        UPDATE drinkbill
         <trim prefix="set" suffixOverrides=",">
             <if test="drinbillCode!=null and drinbillCode!=''">drinbillCode = #{drinbillCode} ,</if>
             <if test="productName!=null and productName!=''">productName = #{productName} ,</if>
@@ -78,7 +78,7 @@
         <selectKey resultType="int" keyColumn="id" keyProperty="id" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO mydiningroom.drinkbill
+        INSERT INTO drinkbill
         (drinbillCode,
         productName,
         proCount,
@@ -107,7 +107,7 @@
     </insert>
 
     <insert id="addDrinkSellBill" parameterType="DrinkSellBill">
-		INSERT INTO mydiningroom.drink_sell_bill
+		INSERT INTO drink_sell_bill
 			(
 			drinkbillID,
 			sellCount,
@@ -131,7 +131,7 @@
         drink_sell_bill.DrinkBillCode,
         productName
         FROM
-        mydiningroom.drink_sell_bill ,drinkbill,provider
+        drink_sell_bill ,drinkbill,provider
         WHERE drinkbill.drinbillCode=drink_sell_bill.DrinkBillCode
         and drinkbill.providerId=provider.id
         <if test="providerId!=null and providerId!=0">
@@ -205,7 +205,7 @@
     </resultMap>
 
     <insert id="addProvider" parameterType="Provider">
-        INSERT INTO mydiningroom.provider
+        INSERT INTO provider
             (
             proName,
             product,
@@ -244,7 +244,7 @@
             remark,
             createDate
             FROM
-            mydiningroom.provider
+            provider
             where 1=1
             <if test="serchProName !=null and serchProName!=''">
                 and proName like concat('%',#{serchProName},'%')
@@ -259,7 +259,7 @@
     <select id="getTotalCount" parameterType="Pager" resultType="int">
         SELECT count(1)
         FROM
-        mydiningroom.provider
+        provider
         where 1=1
         <if test="serchProName !=null and serchProName!=''">
             and proName like concat('%',#{serchProName},'%')
@@ -275,7 +275,7 @@
     </delete>
 
     <update id="updateProvider" parameterType="Provider">
-        UPDATE mydiningroom.provider
+        UPDATE provider
             <trim prefix="set" suffixOverrides=",">
                 <if test="proName!=null and proName!=''"> proName = #{proName} ,</if>
                 <if test="product!=null and product!=''"> product =#{product} ,</if>

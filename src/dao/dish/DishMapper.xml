@@ -14,7 +14,7 @@
 	</select>
 
     <insert id="addDish" parameterType="Dish">
-	   INSERT INTO mydiningroom.dish
+	   INSERT INTO dish
 	(dishName,
 	price,
 	TYPE,
