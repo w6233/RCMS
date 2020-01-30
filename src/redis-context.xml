@@ -21,7 +21,7 @@
 	<!--设置链接属性 -->
 	<bean id="connectionFactory"
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-		p:hostName="${redis.host}" p:port="${redis.port}" p:pool-config-ref="poolConfig" p:timeout="100000" />
+		p:hostName="${redis.host}" p:port="${redis.port}" p:pool-config-ref="poolConfig" p:timeout="60000" />
 	<!-- Jedis模板配置 -->
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
 		<property name="connectionFactory" ref="connectionFactory" />

@@ -10,19 +10,20 @@
 
 <!-- 权限控制 -->
 
-	<%
-/* 		if(session.getAttribute("user")==null){
-			response.sendRedirect(request.getContextPath()+"/login.html");
-		} */
-	
-	 %>
+<%
+	/* 		if(session.getAttribute("user")==null){
+				response.sendRedirect(request.getContextPath()+"/login.html");
+			} */
+%>
 
 <!-- wrapper开始 -->
 <div id="wrapper">
-<input type="hidden" id="Myath" path="${pageContext.request.contextPath }" />
+	<input type="hidden" id="Myath"
+		path="${pageContext.request.contextPath }" />
 	<!-- 悬浮导航 -->
 	<div class="navbar navbar-inverse navbar-fixed-top">
-	<input type="hidden"  id="path" path="${pageContext.request.contextPath }" />
+		<input type="hidden" id="path"
+			path="${pageContext.request.contextPath }" />
 		<div class="adjust-nav">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -35,10 +36,13 @@
 				</a>
 			</div>
 			<div class="row">
-			<span class="logout-spn">
-			 <a href="javascript:;" style="color:#fff;">操作员:${user.userName }</a>
-				<p class="text-right"><a href="${pageContext.request.contextPath}/logout.html" style="color:white;font-size: 14px;">注销</a></p>
-			</span>
+				<span class="logout-spn"> <a href="javascript:;"
+					style="color: #fff;">操作员:${user.userName }</a>
+					<p class="text-right">
+						<a href="${pageContext.request.contextPath}/logout.html"
+							style="color: white; font-size: 14px;">注销</a>
+					</p>
+				</span>
 			</div>
 		</div>
 	</div>
@@ -62,6 +66,10 @@
 					href="${pageContext.request.contextPath}/drink.html?show=drink"
 					<c:if test="${param.show=='drink' }">class="active-link"</c:if>><i
 						class="fa fa-qrcode "></i>酒水库存</a></li>
+				<li><a
+					href="${pageContext.request.contextPath}/vip/vip.html?show=vip"
+					<c:if test="${param.show=='vip'}">class="active-link"</c:if>><i
+						class="fa fa-qrcode "></i>会员管理</a></li>
 			</ul>
 		</div>
 	</nav>
