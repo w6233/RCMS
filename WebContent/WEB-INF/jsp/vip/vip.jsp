@@ -1,8 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
 
@@ -29,120 +28,82 @@
 
 	<!-- 标题 -->
 	<div class="row">
-		<div class="col-md-12">
-		</div>
+		<div class="col-md-12"></div>
 	</div>
 	<hr />
 	<!-- /标题 -->
-	<input type="hidden" id="path" path="${pageContext.request.contextPath}" />
+	<input type="hidden" id="path"
+		path="${pageContext.request.contextPath}" />
 	<!-- 主体 -->
-	<div class="col-lg-12 drinkbody" style="display: none;">
+	<div class="col-lg-12 vipbody" style="display: none;">
 
 		<!-- 导航 -->
 		<ul class="nav nav-tabs ">
 			<li class="active"><a href="#today" data-toggle="tab">会员信息</a></li>
-			<li><a href="#xiaoshou" id="showSellDivBtn" data-toggle="tab">消费记录</a></li>
-			<li><a href="#shengyu" data-toggle="tab">剩余信息</a></li>
+			<li><a href="#consume" id="showSellDivBtn" data-toggle="tab">消费记录</a></li>
 		</ul>
 		<!-- /导航 -->
 
 		<!-- 导航内容 -->
 		<div class="tab-content">
 
-			<!-- 进货信息 -->
+			<!-- 会员信息 -->
 			<div class=" tab-pane fade active in" id="today">
 				<%@include file="vipList.jsp"%>
 			</div>
-			<!-- /进货信息 -->
+			<!-- /会员信息 -->
 
-			<!-- 销售信息 -->
-			<div class="tab-pane fade" id="xiaoshou">
-				<div class="col-lg-12 col-md-12 " >
-					<br/>
+			<!-- 消费记录 -->
+			<div class="tab-pane fade" id="consume">
+				<div class="col-lg-12 col-md-12 ">
+					<br />
 					<div class="table-responsive ">
 						<div class="row">
 							<div class="col-lg-3">
 								<div class="input-group">
-                    <span
-							class="input-group-addon ">供应商</span><select type="text" id="sellProviderId" name="sellProviderId"
-																		 class="form-control providerSlecteDiv">
-
-								</select>
+									<span class="input-group-addon">会员姓名</span><input type="text"
+										id="vipName" name="vipName" class="form-control" />
 								</div>
 							</div>
 							<div class="col-lg-3">
 								<div class="input-group">
-                     <span
-							 class="input-group-addon">商品名称</span><input type="text" id="sellProductName" name="sellProductName" class="form-control"/>
+									<span class="input-group-addon">手机号码</span><input type="text"
+										id="phone" name="phone" class="form-control" />
 								</div>
 							</div>
 							<div class="col-lg-3">
-								<button class="btn btn-default" id="serchDrinkSellBillBtn">查询</button>
+								<button class="btn btn-default" id="searchConsumeBtn">查询</button>
+							</div>
+							<div class="col-lg-3">
+								<a class="btn btn-default showCutModal"> 扣款 </a>
 							</div>
 						</div>
-						<br/>
-						<div id="ajaxSellListAppendDiv">
-
-						</div>
+						<br />
+						<div id="ajaxSellListAppendDiv"></div>
 					</div>
 				</div>
 			</div>
-			<!-- /销售信息 -->
-
-			<!-- 剩余信息 -->
-			<div class="tab-pane fade" id="shengyu">
-				<div class="col-lg-12 col-md-12 " >
-					<br/>
-					<div class="table-responsive ">
-						<div class="row">
-							<div class="col-lg-3">
-								<div class="input-group">
-                    <span
-							class="input-group-addon ">供应商</span><select type="text" id="suplusProviderId" name="suplusProviderId"
-																		 class="form-control providerSlecteDiv">
-
-								</select>
-								</div>
-							</div>
-							<div class="col-lg-3">
-								<div class="input-group">
-                     <span
-							 class="input-group-addon">商品名称</span><input type="text" id="suplusProductName" name="suplusProductName" class="form-control"/>
-								</div>
-							</div>
-							<div class="col-lg-3">
-								<button class="btn btn-default" id="serchDrinkSuplusBillBtn">查询</button>
-							</div>
-						</div>
-						<br/>
-						<div id="ajaxSuplusListAppendDiv">
-
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /剩余信息 -->
+			<!-- /消费记录 -->
 		</div>
 		<!-- /导航内容 -->
 
 	</div>
 	<!-- /主体 -->
 
-	<!-- 添加进货信息弹框 -->
+	<!-- 添加会员信息弹框 -->
 	<div class="modal fade" id="addVipModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<%@include file="addVipModal.jsp"%>
 	</div>
-	<!-- /添加进货信息弹框 -->
+	<!-- /添加会员信息弹框 -->
 
 	<!-- 尾文件 -->
 	<%@ include file="../command/foot.jsp"%>
 	<!-- 尾文件 -->
 	<script src="${pageContext.request.contextPath}/assets/js/vip.js"></script>
-
 	<script type="text/javascript">
-        $(function () {
-            $(".drinkbody").slideDown(500);
-        })
+		$(function() {
+			$(".vipbody").slideDown(500);
+		})
 	</script>
 </body>
 </html>

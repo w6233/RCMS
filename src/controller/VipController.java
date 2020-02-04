@@ -3,101 +3,82 @@ package controller;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import pojo.*;
-import service.drink.ProviderService;
-import tools.BillCodeUtil;
+import service.vip.VipService;
 import tools.PagerTools;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.sound.midi.Soundbank;
 import java.util.List;
 
 @Controller
 @RequestMapping("/vip")
 public class VipController {
+	
     @Autowired
-    private ProviderService providerService;
+    private VipService vipService;
 
     @RequestMapping("/vip.html")
     public String vipMain(HttpSession session) {
         if(session.getAttribute("user")==null){//权限控制
-            return "redirect:login.html";
+            return "redirect:/login.html";
         }
         return "/vip/vip";
     }
     
-  //添加进货信息
+  //添加会员信息
 	@RequestMapping("/addVip.do")
 	@ResponseBody
-	public Object addVip(Drinkbill drinkbill) {
-//	    String drinkBillCode = BillCodeUtil.getBillCode();
-//	    drinkbill.setDrinbillCode(drinkBillCode);
-//	    int addDrinkBillFlag = providerService.addDrinkBill(drinkbill);
-//	    drinkSellBill.setDrinkbillId(drinkbill.getId());
-//	    drinkSellBill.setDrinkBillCode(drinkBillCode);
-//	    int addDrinkSellBillFlag = providerService.addDrinkSellBill(drinkSellBill);
-		int addVipFlag = 1;
+	public Object addVip(Vip vip,HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(user==null){//权限控制
+			return "redirect:/login.html";
+		}
+		vip.setCreator(user.getUserCode());
+		int addVipFlag = vipService.insertVip(vip);
 	    return "{\"addVipFlag\":\"" + addVipFlag + "\"}";
 	}
+	
+  //加载会员信息
+	@RequestMapping("/loadVipList.do")
+	@ResponseBody
+	public ModelAndView loadDrinkBillCode(ModelAndView modelAndView,Vip pager) {	
+		int totalCount =  vipService.getVipCount(pager);
+	    if (totalCount != 0) {
+	        pager.setTotalCount(totalCount);
+	    } else {
+	        pager.setTotalCount(1);
+	    }
+	    pager.setPageSize(PagerTools.vipPagerSize);
+	    pager.count();
+	    List<Vip> vipList = vipService.getVipList(pager);
+	    pager.setList(vipList);
+	    modelAndView.addObject("pager", pager);
+        modelAndView.setViewName("/vip/ajaxVipList");
+        return modelAndView;
+	}
 
-//    //加载供应下拉列表
-//    @RequestMapping("/loadProviderSelect.do")
-//    @ResponseBody
-//    public Object loadProviderSelect() {
-//        return JSON.toJSONString(providerService.getProvider());
-//    }
-//
-//    ;
-//
-//    //加载进货信息
-//    @RequestMapping("/loadDrinkBill.do")
-//    @ResponseBody
-//    public ModelAndView loadDrinkBill(ModelAndView modelAndView, DrinkBillPager pager) {
-//        int totalCount = providerService.getDrinkBillCount(pager);
-//        if (totalCount != 0) {
-//            pager.setTotalCount(totalCount);
-//        } else {
-//            pager.setTotalCount(1);
-//        }
-//        pager.setPageSize(PagerTools.drinkBillPagerSize);
-//        pager.count();
-//        pager.setList(providerService.getDrinkBill(pager));
-//        modelAndView.addObject("pager", pager);
-//        modelAndView.setViewName("/drink/ajaxJinhuoList");
-//        return modelAndView;
-//    }
-//
-//    //加载进货信息
-//    @RequestMapping("/loadDrinkBillCode.do")
-//    @ResponseBody
-//    public Object loadDrinkBillCode(DrinkBillPager pager) {
-//        int totalCount = providerService.getDrinkBillCount(pager);
-//        if (totalCount != 0) {
-//            pager.setTotalCount(totalCount);
-//        } else {
-//            pager.setTotalCount(1);
-//        }
-//        pager.setPageSize(100);
-//        pager.count();
-//        List<Drinkbill> drinkBills=providerService.getDrinkBill(pager);
-//        return JSON.toJSONString(drinkBills);
-//    }
-//
-//    //del删除进货信息
-//    @RequestMapping("/delDrinkBill.do")
-//    @ResponseBody
-//    public Object delDrinkBill(@RequestParam(required = false) String id) {
-//        providerService.delDrinkSellBill(id);
-//        return JSON.toJSONString(providerService.delDrinkBill(id));
-//    }
-//
-//
+
+    //充值or扣费
+    @RequestMapping("/change.do")
+    @ResponseBody
+    public Object charging(HttpSession session,Consume consume) {
+    	User user = (User) session.getAttribute("user");
+		if(user==null){//权限控制
+			return "redirect:/login.html";
+		}
+		consume.setCreator(user.getUserCode());
+    	int row = vipService.change(consume);
+    	if(row == 1) {
+    		return ApiResult.of(ResultCode.SUCCESS);
+    	}else {
+    		return ApiResult.of(ResultCode.UNKNOWN_ERROR);
+    	}
+    }
+
+
 //    //del删除销售信息
 //    @RequestMapping("/delDrinkSellBill.do")
 //    @ResponseBody

@@ -55,8 +55,7 @@ public class Pager {
 			totalCount=1;
 		}
 		if (pageSize != null && pageSize != 0) {
-			pageCount = totalCount % pageSize == 0 ? totalCount / pageSize
-					: totalCount / pageSize + 1;	
+			pageCount = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;	
 		}
 		if (pageIndex == null || pageIndex == 0) {
 			pageIndex = 1;

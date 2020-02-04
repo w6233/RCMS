@@ -12,14 +12,12 @@
 		<div class="row">
 			<div class="col-lg-3">
 				<div class="input-group">
-					<span class="input-group-addon">会员姓名</span><input type="text"
-						id="vipName" name="vipName" class="form-control" />
+					<span class="input-group-addon">会员姓名</span><input type="text" id="vipName" name="vipName" class="form-control" />
 				</div>
 			</div>
 			<div class="col-lg-3">
 				<div class="input-group">
-					<span class="input-group-addon">手机号码</span><input type="text"
-						id="phone" name="phone" class="form-control" />
+					<span class="input-group-addon">手机号码</span><input type="text" id="phone" name="phone" class="form-control" />
 				</div>
 			</div>
 			<div class="col-lg-3">

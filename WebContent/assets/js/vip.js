@@ -3,169 +3,153 @@ $(function () {
 
     //参数
     var param = {};
-
+    
     function getParam(vipName, phone, pageIndex) {
         param.vipName = vipName;
         param.phone = phone;
         param.pageIndex = pageIndex;
     }
+    
+    function loadVipList(param) {
+    	$.ajax({
+    		url: path+"/vip/loadVipList.do",
+    		dataType: "html",
+    		type: "post",
+    		data: param,
+    		success: function (data) {
+    			$("#ajaxVipListAppendDiv").html(data);
+    		},
+    		error: function () {
+    			alert("通信异常");
+    		}
+    	});
+    }
 
-    getParam(0, null, 1);
-    loadDrinkBill(param);
-    //翻页
-    $("#today").on("click", ".drinkBillPagerBtn", function (e) {
-        var pageIndex = $(e.target).attr("pageIndex");
-        var phone = $(e.target).attr("phone");
-        var vipName = $(e.target).attr("vipName");
-        getParam(vipName, phone, pageIndex);
-        loadDrinkBill(param);
-    })
+    getParam(null, null, 1);
+    
+    loadVipList(param);
+    
     //动态搜索
-    $("#today").on("click", "#serchDrinkBillBtn", function (e) {
-        var phone = $("#phone").val();
-        var vipName = $("#vipName").val();
-        getParam(vipName, phone, 1);
-        loadDrinkBill(param);
+    $("#today").on("click", "#searchVipBtn", function (e) {
+    	var phone = $("#phone").val();
+    	var vipName = $("#vipName").val();
+    	getParam(vipName, phone, 1);
+    	loadVipList(param);
     })
-    $("#shengyu").on("click", "#serchDrinkSuplusBillBtn", function (e){
-        var phone = $("#suplusProductName").val();
-        var vipName = $("#suplusProviderId").val();
-        getParam(vipName, phone, 1);
-        loadSuplusDrinkBill(param);
-    })
-    getParam(0, null, 1);
-    loadSuplusDrinkBill(param);
-    //ajax加载进货信息
-    function loadSuplusDrinkBill(param) {
-        $.ajax({
-            url: path+"/loadSuplusDrinkBill.do",
-            dataType: "html",
-            type: "post",
-            data: param,
-            success: function (data) {
-                $("#ajaxSuplusListAppendDiv").html(data);
-            },
-            error: function () {
-                alert("加载剩余信息通信异常");
-            }
-        });
-    }
-    //ajax加载进货信息
-    function loadDrinkBill(param) {
-        $.ajax({
-            url: path+"/loadDrinkBill.do",
-            dataType: "html",
-            type: "post",
-            data: param,
-            success: function (data) {
-                $("#ajaxVipListAppendDiv").html(data);
-            },
-            error: function () {
-                alert("通信异常");
-            }
-        });
-    }
-    $("#showSellDivBtn").click(function () {
-        getParam(0, null, 1);
-        loadDrinkSellBill(param);
-    });
-    getParam(0, null, 1);
-    loadDrinkSellBill(param);
-    function loadDrinkSellBill(param) {
-        $.ajax({
-            url: path+"/loadDrinkSellBill.do",
-            dataType: "html",
-            type: "post",
-            data: param,
-            success: function (data) {
-                $("#ajaxSellListAppendDiv").html(data);
-            },
-            error: function () {
-                alert("通信异常");
-            }
-        });
-    }
-    //销售信息翻页
-    $("#ajaxSellListAppendDiv").on("click",".drinkSellBillPagerBtn",function (e) {
+    
+    //翻页
+    $("#today").on("click", ".vipPagerBtn", function (e) {
         var pageIndex = $(e.target).attr("pageIndex");
         var phone = $(e.target).attr("phone");
         var vipName = $(e.target).attr("vipName");
         getParam(vipName, phone, pageIndex);
-        loadDrinkSellBill(param);
+        loadVipList(param);
     })
-    //销售信息翻页
-    $("#ajaxSuplusListAppendDiv").on("click",".suplusDrinkBillPagerBtn",function (e) {
-        var pageIndex = $(e.target).attr("pageIndex");
-        var phone = $(e.target).attr("phone");
-        var vipName = $(e.target).attr("vipName");
-        getParam(vipName, phone, pageIndex);
-        loadSuplusDrinkBill(param);
+    
+    //扣费模块
+    $("#today").on("click", ".charging", function (e) {
+		var eTd10 = $(e.target);
+		eTd10.attr('disabled',true);
+		var vipId = eTd10.attr("vipId");
+		var chargingStr = "<tr>" + 
+		"    <td class=\"text-center\">扣款行</td>" + 
+		"    <td class=\"text-center\">-</td>" + 
+		"    <td class=\"text-center\"><input type=\"number\" class=\"form-control\" id=\"reducePay\" name=\"reducePay\" placeholder=\"扣除金额\" min=\"1\" /></td>" + 
+		"    <td class=\"text-center\"><input type=\"number\" class=\"form-control\" id=\"reduceGive\" name=\"reduceGive\" placeholder=\"扣除金额\" min=\"1\" /></td>" + 
+		"    <td class=\"text-center\"><input type=\"text\" class=\"form-control\" id=\"reducePayee\" name=\"reducePayee\" placeholder=\"收款人\" /></td>" + 
+		"    <td class=\"text-center\">" + 
+		"		<div class=\"input-group\">" + 
+		"			<select type=\"text\" id=\"reduceWay\" name=\"reduceWay\" class=\"form-control\">" + 
+		"				<option value=\"0\" selected=\"selected\">请选择</option>" + 
+		"				<option value=\"1\">支付宝</option>" + 
+		"				<option value=\"2\">微信</option>" + 
+		"				<option value=\"3\">美团</option>" + 
+		"				<option value=\"4\">现金</option>" + 
+		"				<option value=\"5\">其它(请备注付款方式)</option>" + 
+		"			</select>" + 
+		"		</div>" + 
+		"    </td>" + 
+		"    <td class=\"text-center\">" + 
+		"        <input type=\"text\" class=\"form-control\" id=\"reduceRemark\" name=\"reduceRemark\" placeholder=\"备注\" />" + 
+		"    </td>" + 
+		"    <td class=\"text-center\">-</td>" + 
+		"    <td class=\"text-center\">-</td>" + 
+		"    <td class=\"text-center\">" + 
+		"        <button class=\"btn btn-danger chargingBtn\" vipId=\""+vipId+"\">确定</button>" + 
+		"        <button class=\"btn btn-danger chargingEscBtn\">取消</button>" + 
+		"    </td>" + 
+		"</tr>";
+		var eTr = eTd10.parents("tr");
+    	eTr.after(chargingStr);
     })
-    //销售信息动态搜索
-    $("#xiaoshou").on("click", "#serchDrinkSellBillBtn", function (e) {
-        var phone = $("#sellProductName").val();
-        var vipName = $("#sellProviderId").val();
-        getParam(vipName, phone, 1);
-        loadDrinkSellBill(param);
+    
+    //扣款
+    $("#today").on("click", ".chargingBtn", function (e) {
+    	if (!confirm("确定扣费？")) {return}
+    	var eTd10 = $(e.target);
+		eTd10.attr('disabled',true);
+		var vipId = eTd10.attr("vipId");
+		var reducePay    =  $("#reducePay").val();
+		var reduceGive   =  $("#reduceGive").val();
+		var reducePayee  =  $("#reducePayee").val();
+		var reduceWay    =  $("#reduceWay").val();
+		var reduceRemark =  $("#reduceRemark").val();
+		if(reducePay        == null || reducePay    == ''){alert("扣除消费金额不能为空");eTd10.attr('disabled',false);return}
+		if(reduceGive       == null || reduceGive   == ''){alert("扣除赠送金额不能为空");eTd10.attr('disabled',false);return}
+		if(reducePayee      == null || reducePayee  == ''){alert("扣款人不能为空");eTd10.attr('disabled',false);return}
+		if(reduceWay        == null || reduceWay    == ''){alert("扣除方式不能为空");eTd10.attr('disabled',false);return}
+		
+		var parameter={};
+		parameter.vipid        = vipId;
+		parameter.changepay    = reducePay;
+		parameter.changegive   = reduceGive;
+		parameter.changepayee  = reducePayee;
+		parameter.changeway    = reduceWay;
+		parameter.remark       = reduceRemark;
+		parameter.recordtype   = 1;
+		
+		$.ajax({
+			url: path+"/vip/change.do",
+			dataType: "json",
+			data: parameter,
+			success: function (data) {
+				if(data.code==0){
+					alert("扣款成功！");
+					getParam(null, null, 1);
+					loadVipList(param);
+				}else{
+					console.log(data);
+					alert("扣款失败！");
+					eTd10.attr('disabled',false);
+				}
+			},
+			error: function () {
+				alert("通信异常");
+			}
+		});
+	
     })
-    //删除进货信息
-    $("#today").on("click", ".delDrinkBill", function (e) {
-        if (confirm("确定删除？")) {
-            var drinkBillId = $(e.target).attr("drinkBillId");
-            $.ajax({
-                url: path+"/delDrinkBill.do",
-                dataType: "json",
-                data: {"id": drinkBillId},
-                success: function (data) {
-                    alert("删除成功！");
-                    getParam(0, null, 1);
-                    loadDrinkBill(param);
-                    loadDrinkSellBill(param);
-                },
-                error: function () {
-                    alert("通信异常");
-                }
-            });
-        }
-    })
-    //删除销售信息
-    $("#xiaoshou").on("click",".delDrinkSellBill",function(e){
-        if (confirm("确定删除？")) {
-            var drinkSellBillId = $(e.target).attr("drinkSellBillId");
-            $.ajax({
-                url: path+"/delDrinkSellBill.do",
-                dataType: "json",
-                data: {"id": drinkSellBillId},
-                success: function (data) {
-                    alert("删除成功！");
-                    getParam(0, null, 1);
-                    loadDrinkSellBill(param);
-                },
-                error: function () {
-                    alert("通信异常");
-                }
-            });
-        }
-    })
-    //更新进货信息
-    $("#today").on("click", ".updateDrinkBill", function (e) {
-        if (confirm("确定付款？")) {
-            var drinkBillId = $(e.target).attr("drinkBillId");
-            $.ajax({
-                url: path+"/updateDrinkBill.do",
-                dataType: "json",
-                data: {"id": drinkBillId},
-                success: function (data) {
-                    alert("付款成功！");
-                    getParam(0, null, 1);
-                    loadDrinkBill(param);
-                },
-                error: function () {
-                    alert("通信异常");
-                }
-            });
-        }
-    });
+    
+
+//充值   
+//    $("#today").on("click", ".recharge", function (e) {
+//        var vipId = $(e.target).attr("vipId");
+//        $.ajax({
+//            url: path+"vip/recharge.do",
+//            dataType: "json",
+//            data: {"id": drinkBillId},
+//            success: function (data) {
+//                alert("付款成功！");
+//                getParam(null, null, 1);
+//                loadVipList(param);
+//            },
+//            error: function () {
+//                alert("通信异常");
+//            }
+//        });
+//    
+//    });
+    
 
 
     //phone\proCount\unit\price\totalCost\vipName\createBy\isPay\remark\addSellPrice
@@ -227,7 +211,7 @@ $(function () {
             url:path+"/vip/addVip.do",
             type:"post",
             dataType:"json",
-            data:param,
+            data:parameter,
             success:function (data) {
                 if(data.addVipFlag==0 ||data.addVipFlag=="0"){
                     alert("添加会员信息失败！");
