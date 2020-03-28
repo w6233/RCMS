@@ -57,25 +57,22 @@
 			<div class="tab-pane fade" id="consume">
 				<div class="col-lg-12 col-md-12 ">
 					<br />
-					<div class="table-responsive ">
+					<div class="table-responsive">
 						<div class="row">
 							<div class="col-lg-3">
 								<div class="input-group">
 									<span class="input-group-addon">会员姓名</span><input type="text"
-										id="vipName" name="vipName" class="form-control" />
+										id="vipNameC" name="vipNameC" class="form-control" />
 								</div>
 							</div>
 							<div class="col-lg-3">
 								<div class="input-group">
 									<span class="input-group-addon">手机号码</span><input type="text"
-										id="phone" name="phone" class="form-control" />
+										id="phoneC" name="phoneC" class="form-control" />
 								</div>
 							</div>
 							<div class="col-lg-3">
 								<button class="btn btn-default" id="searchConsumeBtn">查询</button>
-							</div>
-							<div class="col-lg-3">
-								<a class="btn btn-default showCutModal"> 扣款 </a>
 							</div>
 						</div>
 						<br />
@@ -95,7 +92,6 @@
 		<%@include file="addVipModal.jsp"%>
 	</div>
 	<!-- /添加会员信息弹框 -->
-
 	<!-- 尾文件 -->
 	<%@ include file="../command/foot.jsp"%>
 	<!-- 尾文件 -->

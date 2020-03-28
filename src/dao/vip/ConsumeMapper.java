@@ -11,7 +11,9 @@ public interface ConsumeMapper {
 
     Consume selectByPrimaryKey(String cid);
 
-    List<Consume> selectAll();
+    List<Consume> selectAll(Consume pager);
 
     int updateByPrimaryKey(Consume record);
+
+	int getConsumeCount(Consume pager);
 }

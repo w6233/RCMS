@@ -5,10 +5,17 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Consume extends Pager implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
     private String cid;
 
     private String vipid;
 
+    private String vipName;
+    
+    private String phone;
+    
     private String billid;
 
     private Integer recordtype;//记录类型:0充值1消费
@@ -31,9 +38,23 @@ public class Consume extends Pager implements Serializable {
 
     private Date modifydate;
 
-    private static final long serialVersionUID = 1L;
+    public String getVipName() {
+		return vipName;
+	}
 
-    public String getCid() {
+	public void setVipName(String vipName) {
+		this.vipName = vipName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getCid() {
         return cid;
     }
 

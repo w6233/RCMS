@@ -2,11 +2,7 @@ var path = $("#Myath").attr("path");
 $(function() {
 	$(".billBody").slideDown(500);
 	// ajax加载账单详情
-	$(".billBody")
-			.on(
-					"click",
-					".billDetailBtn",
-					function(e) {
+	$(".billBody").on( "click", ".billDetailBtn", function(e) {
 						// billDetails
 						var id = $(e.target).attr("deskBillId");
 						var discount = $(e.target).attr("discount");
@@ -31,8 +27,7 @@ $(function() {
 							break;
 						}
 						if (id != null && id != 0) {
-							$
-									.ajax({
+							$.ajax({
 										url : path + "/getBillDetail.do",
 										data : {
 											"id" : id
@@ -80,19 +75,13 @@ $(function() {
 											$("#billPeoNum").text(
 													billPeoNum + "");
 											$("#payType").html(payType);
-											if (discount == null
-													|| discount == "" || discount==0 || discount=="0") {
+											if (discount == null || discount == "" || discount==0 || discount=="0") {
 												$("#discount").text("无");
-												$("#afterDiscount").text(
-														totalMoney);
+												$("#afterDiscount").text(totalMoney);
 											} else {
-												$("#discount")
-														.text(
-																parseFloat(discount) * 10);
+												$("#discount").text(parseFloat(discount) * 10);
 												var afterDiscount = (parseFloat(totalMoney) * parseFloat(discount));
-												$("#afterDiscount").text(
-														afterDiscount
-																.toFixed(2));
+												$("#afterDiscount").text( afterDiscount.toFixed(2));
 											}
 
 										}

@@ -28,4 +28,18 @@ public interface VipService {
 	 */
 	int change(Consume consume);
 
+	/*
+	 * 获取消费记录的数量
+	 * @param pager
+	 * @return
+	 */
+	int getConsumeCount(Consume pager);
+
+	/**
+	 * 获取消费列表
+	 * @param pager
+	 * @return
+	 */
+	List<Consume> getConsumeList(Consume pager);
+
 }

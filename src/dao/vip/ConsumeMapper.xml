@@ -4,72 +4,131 @@
 	<resultMap id="BaseResultMap" type="pojo.Consume">
 		<id column="cId" jdbcType="VARCHAR" property="cid" />
 		<result column="vipId" jdbcType="VARCHAR" property="vipid" />
+		<result column="vipName" jdbcType="VARCHAR" property="vipName" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
 		<result column="billId" jdbcType="VARCHAR" property="billid" />
-		<result column="recordType" jdbcType="INTEGER"
-			property="recordtype" />
-		<result column="changePay" jdbcType="DECIMAL"
-			property="changepay" />
-		<result column="changeGive" jdbcType="DECIMAL"
-			property="changegive" />
-		<result column="changePayee" jdbcType="VARCHAR"
-			property="changepayee" />
-		<result column="changeWay" jdbcType="INTEGER"
-			property="changeway" />
+		<result column="recordType" jdbcType="INTEGER" property="recordtype" />
+		<result column="changePay" jdbcType="DECIMAL" property="changepay" />
+		<result column="changeGive" jdbcType="DECIMAL" property="changegive" />
+		<result column="changePayee" jdbcType="VARCHAR" property="changepayee" />
+		<result column="changeWay" jdbcType="INTEGER" property="changeway" />
 		<result column="remark" jdbcType="VARCHAR" property="remark" />
 		<result column="creator" jdbcType="VARCHAR" property="creator" />
-		<result column="createDate" jdbcType="TIMESTAMP"
-			property="createdate" />
-		<result column="modifier" jdbcType="VARCHAR"
-			property="modifier" />
-		<result column="modifyDate" jdbcType="TIMESTAMP"
-			property="modifydate" />
+		<result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
+		<result column="modifier" jdbcType="VARCHAR" property="modifier" />
+		<result column="modifyDate" jdbcType="TIMESTAMP" property="modifydate" />
 	</resultMap>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from consume
+		delete from
+		consume
 		where cId = #{cid,jdbcType=VARCHAR}
 	</delete>
 	<insert id="insert" parameterType="pojo.Consume">
-		insert into consume (cId, vipId, billId,
-		recordType, changePay, changeGive,
-		changePayee, changeWay, remark,
-		creator, createDate, modifier,
-		modifyDate)
-		values (#{cid,jdbcType=VARCHAR}, #{vipid,jdbcType=VARCHAR},
+		insert into consume (
+		cId,
+		vipId, 
+		vipName,
+		phone,
+		billId,
+		recordType, 
+		changePay, 
+		changeGive,
+		changePayee,
+		changeWay, 
+		remark,
+		creator, 
+		createDate, 
+		modifier,
+		modifyDate) values (
+		#{cid,jdbcType=VARCHAR}, 
+		#{vipid,jdbcType=VARCHAR},
+		#{vipName,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
 		#{billid,jdbcType=VARCHAR},
-		#{recordtype,jdbcType=INTEGER}, #{changepay,jdbcType=DECIMAL}, #{changegive,jdbcType=DECIMAL},
-		#{changepayee,jdbcType=VARCHAR}, #{changeway,jdbcType=INTEGER},
+		#{recordtype,jdbcType=INTEGER},
+		#{changepay,jdbcType=DECIMAL}, 
+		#{changegive,jdbcType=DECIMAL},
+		#{changepayee,jdbcType=VARCHAR}, 
+		#{changeway,jdbcType=INTEGER},
 		#{remark,jdbcType=VARCHAR},
-		#{creator,jdbcType=VARCHAR}, now(), #{modifier,jdbcType=VARCHAR},
+		#{creator,jdbcType=VARCHAR}, 
+		now(),
+		#{modifier,jdbcType=VARCHAR},
 		now())
 	</insert>
 	<update id="updateByPrimaryKey" parameterType="pojo.Consume">
 		update consume
-		set vipId = #{vipid,jdbcType=VARCHAR},
+		set
+		vipId = #{vipid,jdbcType=VARCHAR},
 		billId = #{billid,jdbcType=VARCHAR},
 		recordType = #{recordtype,jdbcType=INTEGER},
-		changePay = #{changepay,jdbcType=DECIMAL},
-		changeGive = #{changegive,jdbcType=DECIMAL},
-		changePayee = #{changepayee,jdbcType=VARCHAR},
-		changeWay = #{changeway,jdbcType=INTEGER},
+		changePay =
+		#{changepay,jdbcType=DECIMAL},
+		changeGive =
+		#{changegive,jdbcType=DECIMAL},
+		changePayee =
+		#{changepayee,jdbcType=VARCHAR},
+		changeWay =
+		#{changeway,jdbcType=INTEGER},
 		remark = #{remark,jdbcType=VARCHAR},
 		creator = #{creator,jdbcType=VARCHAR},
-		createDate = #{createdate,jdbcType=TIMESTAMP},
-		modifier = #{modifier,jdbcType=VARCHAR},
-		modifyDate = #{modifydate,jdbcType=TIMESTAMP}
+		createDate =
+		#{createdate,jdbcType=TIMESTAMP},
+		modifier =
+		#{modifier,jdbcType=VARCHAR},
+		modifyDate =
+		#{modifydate,jdbcType=TIMESTAMP}
 		where cId = #{cid,jdbcType=VARCHAR}
 	</update>
 	<select id="selectByPrimaryKey" parameterType="java.lang.String"
 		resultMap="BaseResultMap">
-		select cId, vipId, billId, recordType, changePay, changeGive, changePayee,
+		select cId, vipId, billId, recordType, changePay,
+		changeGive, changePayee,
 		changeWay,
-		remark, creator, createDate, modifier, modifyDate
+		remark, creator, createDate,
+		modifier, modifyDate
 		from consume
 		where cId = #{cid,jdbcType=VARCHAR}
 	</select>
-	<select id="selectAll" resultMap="BaseResultMap">
-		select cId, vipId, billId, recordType, changePay, changeGive, changePayee,
-		changeWay,
-		remark, creator, createDate, modifier, modifyDate
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="pojo.Consume">
+		select 
+			cId, 
+			vipId, 
+			vipName,
+			phone,
+			billId,
+			recordType, 
+			changePay, 
+			changeGive,
+			changePayee,
+			changeWay,
+			remark,
+			creator, 
+			createDate, 
+			modifier, 
+			modifyDate
 		from consume
+		<trim prefix="where" prefixOverrides="and">
+			<if test="vipName!=null and vipName!=''">
+				and vipName like concat("%",#{vipName},"%")
+			</if>
+			<if test="phone!=null and phone!=''">
+				and phone like concat("%",#{phone},"%")
+			</if>
+		</trim>
+		order By createDate desc
+		LIMIT #{firstData}, #{pageSize}
+	</select>
+	
+	<select id="getConsumeCount" resultType="int" parameterType="pojo.Consume">
+		select count(*) from consume
+		<trim prefix="where" prefixOverrides="and">
+			<if test="vipName!=null and vipName!=''">
+				and vipName like concat("%",#{vipName},"%")
+			</if>
+			<if test="phone!=null and phone!=''">
+				and phone like concat("%",#{phone},"%")
+			</if>
+		</trim>
 	</select>
 </mapper>

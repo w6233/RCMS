@@ -48,7 +48,7 @@
             </td>
             <td class="text-center">
                 <button class="btn btn-danger charging" vipId="${vip.id}">扣费</button>
-                <button class="btn btn-success recharge" vipId="${vip.id}">充值 </button>
+                <button class="btn btn-success recharge" vipId="${vip.id}">充值</button>
             </td>
         </tr>
     </c:forEach>

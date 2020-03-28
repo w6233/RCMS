@@ -77,12 +77,24 @@ public class VipServiceImpl implements VipService {
 			throw new BusinessRuntimeException(ResultCode.UPDATE_ERROR);
 		}
 		//保存扣款记录
+		consume.setVipName(vip.getVipName());
+		consume.setPhone(vip.getPhone());
 		consume.setModifier(consume.getCreator());
 		int recordRow = consumeMapper.insert(consume);
 		if(recordRow == 0) {
 			throw new BusinessRuntimeException(ResultCode.INSERT_ERROR);
 		}
 		return recordRow;
+	}
+
+	@Override
+	public int getConsumeCount(Consume pager) {
+		return consumeMapper.getConsumeCount(pager);
+	}
+
+	@Override
+	public List<Consume> getConsumeList(Consume pager) {
+		return consumeMapper.selectAll(pager);
 	}
 
 	

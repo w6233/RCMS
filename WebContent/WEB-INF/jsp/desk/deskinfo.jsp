@@ -354,7 +354,8 @@
 										class="payType" name="payType" id="bankCard" value="3">
 										刷卡
 									</label> <label class="radio-inline"> <input type="radio"
-										class="payType" name="payType" id="cash" value="4"> 现金
+										class="payType" name="payType" id="cash" value="4"> 
+										现金
 									</label> <label class="radio-inline"> <input type="radio"
 										class="payType" name="payType" id="debtor" value="5">
 										挂账

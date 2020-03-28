@@ -1,6 +1,5 @@
 package controller;
 
-import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,6 +76,24 @@ public class VipController {
     		return ApiResult.of(ResultCode.UNKNOWN_ERROR);
     	}
     }
+    
+    //加载销售信息
+	@RequestMapping("/loadSellList.do")
+	@ResponseBody
+	public ModelAndView loadSellList(ModelAndView modelAndView, Consume pager) {
+		int totalCount =  vipService.getConsumeCount(pager);
+		if (totalCount != 0) {
+		    pager.setTotalCount(totalCount);
+		} else {
+		    pager.setTotalCount(1);
+		}
+		pager.setPageSize(PagerTools.vipPagerSize);
+		pager.count();
+		pager.setList(vipService.getConsumeList(pager));
+		modelAndView.addObject("pager", pager);
+		modelAndView.setViewName("/vip/sellList");
+		return modelAndView;
+	}
 
 
 //    //del删除销售信息
@@ -95,23 +112,7 @@ public class VipController {
 //    }
 //
 //
-//    //加载销售信息
-//    @RequestMapping("/loadDrinkSellBill.do")
-//    @ResponseBody
-//    public ModelAndView loadDrinkSellBill(ModelAndView modelAndView, DrinkBillPager pager) {
-//        int totalCount = providerService.getDrinkSellBillCount(pager);
-//        if (totalCount != 0) {
-//            pager.setTotalCount(totalCount);
-//        } else {
-//            pager.setTotalCount(1);
-//        }
-//        pager.setPageSize(PagerTools.drinkBillPagerSize);
-//        pager.count();
-//        pager.setList(providerService.getDrinkSellBill(pager));
-//        modelAndView.addObject("pager", pager);
-//        modelAndView.setViewName("/drink/sellList");
-//        return modelAndView;
-//    }
+
 //
 //    //加载销售信息
 //    @RequestMapping("/loadSuplusDrinkBill.do")
