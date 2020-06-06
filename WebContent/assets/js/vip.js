@@ -115,6 +115,7 @@ $(function () {
     	"        <button class=\"btn btn-danger chargingBtn\" vipId=\""+vipId+"\">确定</button>" + 
     	"        <button class=\"btn btn-danger chargingEscBtn\">取消</button>" + 
     	"    </td>" + 
+    	
     	"</tr>";
     	var eTr = eTd10.parents("tr");
     	eTr.after(chargingStr);

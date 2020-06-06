@@ -53,7 +53,7 @@ body {
 			method="post">
 			<p class="col-lg-4 col-md-3"></p>
 			<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 " id="logbox">
-				<p class="h1 text-center title">餐厅收银管理系统</p>
+				<p class="h1 text-center title">推理HOME收银管理系统</p>
 				<h2>登录：<span style="color:red;font-size: 12px;">${error}</span></h2>
 				<div class="input-group">
 					<span class="input-group-addon"><span
